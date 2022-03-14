@@ -1,0 +1,343 @@
+#------------------------#
+# Namelist for REcoM-2   #
+#------------------------#
+#
+ &REcoM_parameters
+# ---------------------
+# general parameters
+# ---------------------
+# chlorophyll specific attenuation coefficients [m^{-1} (mg CHL)^{-1}]
+ a_chl=0.03,
+# attenuation due to water [m^{-1}]
+ k_w=0.04,  
+# constant Redfield C:N ratio      
+ redfield=6.625,          
+# slope of the linear part of the Arrhenius function [Kelvin]
+ Ae=4500.0,
+# reference temperature [Kelvin]
+ recom_Tref=288.15, 
+# minimum concentration of biogeochemical variables
+ tiny = 1.e-08,
+# number of  timesteps per external timestep
+ bio_step=1,
+# ---------------------
+# small phytoplankton
+# ---------------------
+# CHL-specific intial slope of P-I curve [depends on unit of radiation]
+ alpha=0.14,             
+# Temperature dependent maximum of C-specific rate of photosynthesis
+# [d^{-1}], set to zero to turn off biology
+ P_cm=3.0,
+# Maximum Chlorophyll a to nitrogen ratio 
+# [mg CHL (mmol N)^{-1} = 0.3 gCHL (gN)^{-1}]
+ CHL_N_max=3.78,   
+# Half-saturation constant for nitrate uptake [mmol N m^{-3}]
+ k_din=0.55,               
+# Temperature dependent maximum of C-specific nitrogen uptake 
+# [mmol N (mmol C)^{-1} d^{-1}]
+# V_cm = ,
+# dimensionless factor
+ V_cm_fact=0.7,           
+# Maintenance respiration rate constant [d^{-1}]
+ res_phy=0.01,           
+# Cost of biosynthesis [mmol C (mmol N)^{-1}]
+ biosynth=2.33,           
+# CHL degradation rate constant [d^{-1}]
+ deg_CHL=0.25,
+# Photoinhibition
+ Drel=0.75,
+ astar=0.0070,
+ k_deg=3.5e-7,
+ r_max=12.0,
+ k_rep=0.25,
+# Maximum photochemical efficiency [mmol C J^{-1}]
+# QYmax=1.14e-4,
+# phytoplankton loss of organic N compounds [d^{-1}]
+ lossN=0.05,            
+# phytoplankton loss of C [d^{-1}]
+ lossC=0.10,             
+# Minimum cell quota of nitrogen (N:C) [mmol N (mmol C)^{-1}]
+ NCmin=0.04,               
+# Maximum cell quota of nitrogen (N:C) [mmol N (mmol C)^{-1}]
+ NCmax=0.20,               
+# N:C uptake ratio (mol/mol)
+ NCuptakeRatio=0.20,               
+# iron to carbon ratio
+# instead use reference Fe2N ratio 
+# Fe2C = 0.005,
+ Fe2N = 0.033,
+# half saturation constant for iron uptake  [mumol Fe m^{-3}]
+ k_Fe = 0.02,
+# ratio of calcifiers to non calcifiers
+ calc_prod_ratio = 0.02,
+# ---------------------
+# diatoms
+# ---------------------
+# CHL-specific intial slope of P-I curve [depends on unit of radiation]
+ alpha_d=0.19,             
+# Temperature dependent maximum of C-specific rate of photosynthesis
+# [d^{-1}], set to zero to turn off biology
+ P_cm_d=3.5,
+# Maximum Chlorophyll a to nitrogen ratio 
+# [mg CHL (mmol N)^{-1} = 0.3 gCHL (gN)^{-1}]
+ CHL_N_max_d=4.2,          
+# Half-saturation constant for nitrate uptake [mmol N m^{-3}]
+ k_din_d=1.0,               
+# Temperature dependent maximum of C-specific nitrogen uptake 
+# [mmol N (mmol C)^{-1} d^{-1}]
+# V_cm = ,
+# dimensionless factor
+ V_cm_fact_d=0.7,           
+# Maintenance respiration rate constant [d^{-1}]
+ res_phy_d=0.01,           
+# Cost of biosynthesis [mmol C (mmol N)^{-1}]
+ biosynth_d=2.33,           
+ biosynthSi=0.0,
+# CHL degradation rate constant [d^{-1}]
+ deg_CHL_d=0.15,
+# Photoinhibition 
+ astar_d=0.0070,
+ k_deg_d=1.5e-7,
+ r_max_d=12.0,
+ k_rep_d=0.25,
+# Maximum photochemical efficiency [mmol C J^{-1}]
+# QYmax_d=1.92e-4,
+# phytoplankton loss of organic N compounds [d^{-1}]
+ lossN_d=0.05,            
+# phytoplankton loss of C [d^{-1}]
+ lossC_d=0.10,             
+# Minimum cell quota of nitrogen (N:C) [mmol N (mmol C)^{-1}]
+ NCmin_d=0.04,               
+# Maximum cell quota of nitrogen (N:C) [mmol N (mmol C)^{-1}]
+ NCmax_d=0.20,               
+ NCuptakeRatio_d=0.20,               
+# Maximum cell quota of silica (Si:C) [mmol Si (mmol C)^{-1}]
+ SiCmin=0.04,               
+ SiCmax=0.80,               
+ SiCuptakeRatio=0.20,               
+# minimum silica to nitrogen ratio
+ SiNmin = 0.3,
+# half saturation constant for silica uptake [mmol Si m^{-3}]
+ k_Si = 4.,
+# iron to carbon ratio
+# instead use reference Fe2N ratio 
+# Fe2C_d = 0.005,
+ Fe2N_d = 0.033,
+# half saturation constant for iron uptake  [mumol Fe m^{-3}]
+ k_Fe_d = 0.12,
+# ---------------------
+# detritus, sinking particles
+# ---------------------
+# temperature dependent remineralisation rate of detritus [d^{-1}]
+ reminN=0.165,            
+ reminC=0.15,
+ reminSi=0.02,            
+ useReminSiT = .true.,
+# phytoplankton sinking velocity [ m d^{-1} ]
+ Vphy=0.,
+ Vdia=0.,
+# detritus sinking velocity [ m d^{-1} ]
+ Vdet=20., 
+# ---------------------
+# zooplankton
+# ---------------------
+# respiration by heterotrophs and mortality (loss to detritus) [d^{-1}]
+ res_het=0.01,  
+ loss_het=0.05,
+# loss of zooplank to dissolved organic compounds
+ lossC_z=0.15,
+ lossN_z=0.15,
+# temperature dependent N degradation of extracellular organic N (EON) 
+# [d^{-1}]
+ rho_N=0.11,              
+# temperature dependent C degradation of extracellular organic C (EOC) 
+# [d^{-1}]
+ rho_C1=0.1,              
+ rho_C2=0.1,              
+# maximum grazing loss parameter [mmol N m^{-3} d^{-1}]  
+ graz_max=2.4, 
+ grazEff = 0.4,          
+# half saturation grazing loss [mmol N^{2} m^{-6}]
+ epsilon=0.35,             
+# -------- end remineralization ----------------------------------
+# ================================================================
+# -------- grazing and aggregation -------------------------------
+# maximum aggregation loss parameters [m^{3} mmol N^{-1} d^{-1}]
+ agg_PD=0.165,
+ agg_PP=0.015,           
+# half saturation parameter for collision and stickiness probability 
+# (TEP dependend) [mmol C m^{-3} (TEP-C concentration)]
+# k_TEP = appears to be not in use at all,
+# -------- end grazing and aggregation ---------------------------
+# ================================================================
+# -------- TEP fraction of EOM -----------------------------------
+# turn on/off TEP aggregation
+ TEPaggregation=.false.,
+# TEP fraction (dimensionless)
+ f_TEP=0.,
+# TEP fraction (f_TEP-x) found in POM (dimensionless)
+ x=0.0,                 
+# stickiness for PCHO-PCHO 
+ agg_PCHO=0.0075,
+# stickiness for TEP-PCHO 
+ agg_TEP=-1.240,
+# -------- end TEP fraction of EOM -------------------------------
+# ================================================================
+# Iron ---------------------------------------
+# scavenging (to turn off set kScavFe=0.)
+ kScavFe = 0.0156,
+ totalLigand = 1.,
+ ligandStabConst = 200.,
+ Fe2N_benthos = 0.33,
+# ================================================================
+# -------- benthic layer -----------------------------------------
+# decay rate of detritus in the benthic layer, product of remin*rho
+# [d^{-1}], turn off benthic layer with values < 0.
+ decayRateBenN=0.005,
+ decayRateBenC=0.005,
+ decayRateBenSi=0.005,
+# ================================================================
+# -------- various switches ---------------------------------------
+# turn on/off sinking of detritus and phytoplankton
+ SINKadv=.true.,
+# light utilization according to Evans+Parslow (1985), requires the 
+# daily mean insolation as input, e.g. shortwave radiation of a NCEP or
+# ECMWF product
+ EvansParslow=.false.,
+# have S/R REcoM_para_read produce some extra output
+ write_flag=.false.,
+# turn on/off iron limitation
+ FeLimit=.true.,
+ &
+
+ &RECOM_PARM01
+# recom_iceFile=' ',
+# recom_pCO2File='pCO2_dum.bin',
+# recom_ironFile='mahowald_Fe_deposition_monthly_clim_192x94_64b.bin',
+# recom_ironFile='Mahowald_180x126x12_nM_32b.bin',
+ recom_ironFile='mahowald_newFeDepClimFix2010_192x94x12_r4.bin',
+#recom_tiny = 2.23D-16,
+#recom_tiny = 1.D-12,
+ brockReedInsolation = .false.,
+ diurnalInsolation = .false.,	
+# this must be true for more that 1D
+ computeHalos = .false.,
+ solarConstant = 1353.,
+ parfrac = 0.43,
+ cloudCover = 0.5,
+ daysPerYear = 360.,
+ constantIronSolubility = .02,
+# constantIronSolubility = 1.,
+# this is just a parameter for a diagnostic
+#fracTEP = 0.0,
+ recom_FeErosionRate = 0.0,
+# OASIM
+ darwin_oasim_edFile01 = 'Ed_400_360x180x12_32b.bin',
+ darwin_oasim_edFile02 = 'Ed_425_360x180x12_32b.bin',              
+ darwin_oasim_edFile03 = 'Ed_450_360x180x12_32b.bin',
+ darwin_oasim_edFile04 = 'Ed_475_360x180x12_32b.bin',
+ darwin_oasim_edFile05 = 'Ed_500_360x180x12_32b.bin',
+ darwin_oasim_edFile06 = 'Ed_525_360x180x12_32b.bin',              
+ darwin_oasim_edFile07 = 'Ed_550_360x180x12_32b.bin',
+ darwin_oasim_edFile08 = 'Ed_575_360x180x12_32b.bin',
+ darwin_oasim_edFile09 = 'Ed_600_360x180x12_32b.bin',
+ darwin_oasim_edFile10 = 'Ed_625_360x180x12_32b.bin',              
+ darwin_oasim_edFile11 = 'Ed_650_360x180x12_32b.bin',
+ darwin_oasim_edFile12 = 'Ed_675_360x180x12_32b.bin',
+ darwin_oasim_edFile13 = 'Ed_700_360x180x12_32b.bin',
+#
+ darwin_oasim_esFile01 = 'Es_400_360x180x12_32b.bin',
+ darwin_oasim_esFile02 = 'Es_425_360x180x12_32b.bin',             
+ darwin_oasim_esFile03 = 'Es_450_360x180x12_32b.bin',
+ darwin_oasim_esFile04 = 'Es_475_360x180x12_32b.bin',
+ darwin_oasim_esFile05 = 'Es_500_360x180x12_32b.bin',
+ darwin_oasim_esFile06 = 'Es_525_360x180x12_32b.bin',              
+ darwin_oasim_esFile07 = 'Es_550_360x180x12_32b.bin',
+ darwin_oasim_esFile08 = 'Es_575_360x180x12_32b.bin',
+ darwin_oasim_esFile09 = 'Es_600_360x180x12_32b.bin',
+ darwin_oasim_esFile10 = 'Es_625_360x180x12_32b.bin',             
+ darwin_oasim_esFile11 = 'Es_650_360x180x12_32b.bin',
+ darwin_oasim_esFile12 = 'Es_675_360x180x12_32b.bin',
+ darwin_oasim_esFile13 = 'Es_700_360x180x12_32b.bin',
+ &
+ 
+ &RECOM_PARM02
+ pCO2startdate1   = 00010115,
+#pCO2startdate2   = 120000,
+ pCO2period       = 2592000.0,
+ pCO2repeatperiod = 31104000.,
+#
+ feduststartdate1 = 00010115, 
+#feduststartdate2 = 120000,
+ fedustperiod     = 2592000.,
+#
+ fedust_nlon      = 192,
+ fedust_nlat      = 94,
+ fedust_lon0      = 0.00D0,
+ fedust_lon_inc   = 1.875D0,
+ fedust_lat0      = -88.5420D0,
+ fedust_lat_inc   = 1.8888, 1.9000, 1.9024, 1.9034, 1.9039, 1.9042,
+     1.9042, 1.9044, 1.9045, 1.9045, 1.9046, 1.9046, 1.9046, 1.9046,
+     1.9047, 1.9046, 1.9047, 1.9047, 1.9047, 1.9047, 1.9047, 1.9047,
+     1.9047, 1.9047, 1.9047, 1.9047, 1.9048, 1.9047, 1.9047, 1.9047,
+     1.9047, 1.9048, 1.9047, 1.9047, 1.9048, 1.9047, 1.9047, 1.9048,
+     1.9047, 1.9047, 1.9048, 1.9047, 1.9047, 1.9048, 1.9047, 1.9047,
+     1.9048, 1.9047, 1.9047, 1.9048, 1.9047, 1.9047, 1.9048, 1.9047,
+     1.9047, 1.9048, 1.9047, 1.9047, 1.9048, 1.9047, 1.9047, 1.9048,
+     1.9047, 1.9047, 1.9047, 1.9047, 1.9048, 1.9047, 1.9047, 1.9047,
+     1.9047, 1.9047, 1.9047, 1.9047, 1.9047, 1.9047, 1.9047, 1.9046,
+     1.9047, 1.9046, 1.9046, 1.9046, 1.9046, 1.9045, 1.9045, 1.9044,
+     1.9042, 1.9042, 1.9039, 1.9034, 1.9024, 1.9000, 1.8888, 1.8888,
+#
+ OASIMstartdate1 = 00010115,
+ OASIMstartdate2 = 120000,
+## OASIMperiod     = 2592000.,
+ OASIMperiod     = -12,
+## exf_inscal_OASIM = 1.0,
+## exf_outscal_OASIM = 1.0, 
+ OASIM_lon0      = 0.5D0,
+ OASIM_lon_inc   = 1.0D0,
+ OASIM_nlon      = 360,
+ OASIM_lat0      = -89.5D0,
+ OASIM_lat_inc   = 179*1.,
+ OASIM_nlat      = 180,
+ &
+
+ &SPECTRAL_FILES
+ darwin_waterabsorbFile='abw25par.dat',
+ darwin_phytoabsorbFile='optics_phyto_recom_carbon_12.dat',
+# darwin_particleabsorbFile='optics_detritus_3bb.dat',
+# darwin_acdomFile='aCDOM13amtVK2006.dat',
+# darwin_surfacespecFile='surfspec_13amt6.dat',
+ &
+
+ &DARWIN_SPECTRAL_PARM
+# darwin_radtrans_kmax=22,
+ darwin_radtrans_niter = -2,
+# darwin_part_size_P=1.0D-15,
+ darwin_diag_acdom_ilam=450,
+# Maximum photochemical efficiency [mmol C J^{-1}]
+ QYmax=1.07D-4,
+ Qymax_d=1.68D-4,
+ aparcoeff = 0.016,
+ bparcoeff = 0.345,
+ &
+
+ &RECOM_ATMOSPCO2
+## whether to read pco2file
+ recom_pco2_int1=2,
+## number of entries: 1778-2017 (included)
+ recom_pco2_int2=240,
+## number of entries if future scenario: 1778-2100
+# recom_pco2_int2=323, 
+## start time step in tracer time-steps!!
+## mid of month: tracer timestep * 2 * 15 
+ recom_pco2_int3=0,
+## interval between entries in tracer time steps!!
+## 15 days, entries for 10 years, when running 5 kept at preindustrial (1778-1898)
+ recom_pco2_int4=720,
+## 7.5 days, entries for 5 years, when running 5 used all atmospheric records (1778-2017)
+# recom_pco2_int4=360,
+## 1 year, when running less than 100 years kept at preindustrial
+# recom_pco2_int4=17280, 
+ &

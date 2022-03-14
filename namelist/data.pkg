@@ -1,0 +1,15 @@
+# Packages
+ &PACKAGES
+ useGMRedi=.TRUE.,
+ useKPP   =.TRUE.,
+ useSEAICE=.true.,
+#useTHSice=.true.,
+#useShelfIce = .true.,
+ useEXF = .true.,
+ useMNC   =.true.,
+ useDiagnostics = .true.,
+ usePTRACERS=.TRUE.,
+ useGCHEM = .true.,
+ useDOWN_SLOPE = .TRUE., 
+ &
+  

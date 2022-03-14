@@ -1,0 +1,130 @@
+# Diagnostic Package Choices
+#-----------------
+# for each output-stream:
+#  filename(n) : prefix of the output file name (only 8.c long) for outp.stream n
+#  frequency(n):< 0 : write snap-shot output every |frequency| seconds
+#               > 0 : write time-average output every frequency seconds
+#  timePhase(n)     : write at time = timePhase + multiple of |frequency|
+#  levels(:,n) : list of levels to write to file (Notes: declared as REAL)
+#                 when this entry is missing, select all common levels of this list
+#  fields(:,n) : list of diagnostics fields (8.c) (see "available_diagnostics" file
+#                 for the list of all available diag. in this particular config)
+#-----------------
+ &diagnostics_list
+
+
+ frequency(1) = 2592000.,
+ timePhase(1) = 125755200.,
+ filename(1) = 'recomDiags2D',
+# levels(1,1) = 0.,
+ fields(1,1) = 'NETPPVIS','NETPPVID','MXLDEPTH',
+#               'SEDFN   ','SEDFC   ','SEDFSI  ',
+#               'SEDFCALC','EXPORTN ',
+                'EXPORTC ',
+#		'EXPCALC ','EXPORTSI','FeSrfFlx',
+#
+ frequency(2) = 2592000.,
+ timePhase(2) = 125755200.,
+ filename(2) = 'recomDiags3D10daily',
+ fields(1,2) = 'TRAC01  ','TRAC02  ','TRAC03  ','TRAC04  ',
+               'TRAC05  ','TRAC06  ','TRAC07  ','TRAC08  ',
+     	       'TRAC09  ','TRAC10  ','TRAC11  ','TRAC12  ',
+               'TRAC13  ','TRAC14  ','TRAC15  ','TRAC16  ',
+	       'TRAC17  ','TRAC18  ','TRAC19  ','TRAC20  ',
+	       'TRAC21  ','TRAC22  ','TRAC23  ','TRAC24  ',	       
+#
+ frequency(3) = 2592000.,
+ timePhase(3) = 125755200.,
+ filename(3) = 'diags2D',
+ fields(1,3) = 'SIarea  ','SIheff  ','SIhsnow ','SIuice  ','SIvice  ',
+               'oceFWflx','oceQnet ','oceTAUX ','oceTAUY ',
+               'ETAN    ','PARSURF ',
+               'par2doa ','rmudave '
+#
+ frequency(4) = 2592000.,
+ timePhase(4) = 125755200.,
+ filename(4) = 'diags3D10daily',
+ fields(1,4) = 'SALT    ','THETA   ','UVEL    ','VVEL    ',
+               'par3d   ',
+               'par3dw  ','par3d_wb','pur3dw  ',
+               'Edz_wb  ','Esz_wb  ','Euz_wb  ',
+               'Estop_wb','Eutop_wb',
+#  	        'qLFN_d  ','qLFSi   ','mmFe    ','mmFe_d  ',
+#               'mmN     ','mmN_d   ','mmSi    ',
+#
+ frequency(5) = 2592000.,
+ timePhase(5) = 125755200.,
+ filename(5) = 'MAREDiags3D10daily',
+ fields(1,5) = 'gr_pps  ', 'gr_ppd  ',
+               'n_assims', 'n_assimd',
+               'cphydoc ', 'cdiadoc ',
+	       'cresphy ', 'cresdia ',
+               'pphotphy', 'pphotdia',
+               'llimphy ', 'llimdia ',
+	       'nlimphy ', 'nlimdia ',
+	       'felimphy', 'felimdia', 'silimdia',
+               'Ek_phy  ', 'Ek_dia  ',
+               'alphaphy', 'alphadia', 'ppcphy  ','ppcdia  ',
+#	       
+ frequency(6) = 2592000.,
+ timePhase(6) = 125755200.,
+ filename(6) = 'RADiags3D10daily',
+ fields(1,6) = 'abtotave', 'acdomave',
+               'abparave', 'abphyave',
+               'abtot_wb', 'acdom_wb',	       
+               'abpar_wb', 'abphy_wb',	  
+               'bttot_wb', 'btpar_wb', 'btphy_wb',
+               'bbtot_wb', 'bbpar_wb', 'bbphy_wb',
+#
+ frequency(7) = 2592000.,
+ timePhase(7) = 125755200.,
+ filename(7) = 'RADiags3DFlux',
+ fields(1,7) = 'par3doa ',
+               'edirect ', 'ediffuse',
+               'euptop  ', 'reflecta',
+               'abtotsur', 'acdomsur', 'abparsur', 'abphysur',	  
+               'bttotsur', 'btparsur', 'btphysur',
+               'bbtotsur', 'bbparsur', 'bbphysur',
+#
+# frequency(5) = 2592000.,
+# filename(5)  = 'stateDiags2D',
+# fields(1,5)  = 'ETAN    ','ETANSQ  ','SIarea  ','SIheff  ','SIhsnow ',
+#                'pCO2Oc  ','Hplus   ',
+#                'FeSrfFlx','FeBtmFlx',
+#
+# frequency(6) = 864000.,
+# filename(6)  = 'stateDiags3D',
+# fields(1,6)  = 'THETA   ','SALT    ','UVEL    ','VVEL    ','WVEL    ',
+#                'DRHODR  ',
+#
+# frequency(7) = 864000.,
+# filename(7)  = 'fluxDiags2D',
+# fields(1,7)  =  'EXFroff ',
+#                'EXFempmr','EXFtaux ','EXFtauy ','EXFqnet ','CO2Flx  ',
+#                'FeSrfFlx','FeBtmFlx',
+# 
+#  frequency(8) = 864000.,
+#  filename(8) = 'dynDiag3D',
+#  fields(1,8) = 'UVELMASS','VVELMASS',
+#
+ &
+
+# Parameter for Diagnostics of per level statistics:
+#-----------------
+# for each output-stream:
+#  stat_fname(n) : prefix of the output file name (only 8.c long) for outp.stream n
+#  stat_freq(n):< 0 : write snap-shot output every |stat_freq| seconds
+#               > 0 : write time-average output every stat_freq seconds
+#  stat_phase(n)    : write at time = stat_phase + multiple of |stat_freq|
+#  stat_region(:,n) : list of "regions" (default: 1 region only=global)
+#  stat_fields(:,n) : list of diagnostics fields (8.c) (see "available_diagnostics.log"
+#                 file for the list of all available diag. in this particular config)
+#-----------------
+ &DIAG_STATIS_PARMS
+#- an example just to check the agreement with MONITOR output:
+#stat_fields(1,1)= 'ETAN    ','UVEL    ','VVEL    ','WVEL    ', 'THETA   ',
+#   stat_fname(1)= 'dynStDiag',
+#    stat_freq(1)= -864000.,
+#   stat_phase(1)= 0.,
+ &
+

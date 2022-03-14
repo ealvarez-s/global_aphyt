@@ -1,0 +1,12 @@
+# SEAICE parameters
+ &SEAICE_PARM01
+  SEAICEwriteState   = .TRUE.,
+  SEAICE_initialHEFF = 0.0,
+  HO = 1.,
+  SEAICEuseFlooding = .true.,
+  SEAICEadvSnow     = .true.,
+  SEAICE_clipVelocities = .false.,
+  SEAICEadvScheme   = 33,
+  SEAICE_no_slip    = .true.,
+# SEAICE_deltaTevp  = 360.,
+ &
