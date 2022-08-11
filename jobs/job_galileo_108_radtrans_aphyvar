@@ -1,0 +1,58 @@
+#!/bin/bash
+#SBATCH --job-name=RtVarI12
+##SBATCH -p mpp
+#SBATCH -N 3
+##SBATCH -n 108
+#SBATCH --ntasks-per-node=36
+#SBATCH --time=06:00:00
+#SBATCH --mem=110gb
+#SBATCH --account=OGS20_PRACE_P
+#SBATCH --partition=gll_usr_prod
+#SBATCH --output ./rt_aphyvar_initial_1slope_2group_fix.%j.out
+
+#umask 022 #
+#ulimit -s 1048576
+#ulimit -c unlimited
+
+module purge
+module load profile/base
+module load intel/pe-xe-2018--binary intelmpi/2018--binary
+module load autoload
+module load hdf5/1.8.18--intel--pe-xe-2018--binary netcdf/4.6.1--intel--pe-xe-2018--binary
+module load mpi4py/3.0.0--intelmpi--2018--binary
+
+source /gpfs/work/OGS20_PRACE_P/COPERNICUS/py_env_2.7.12/bin/activate
+export PYTHONPATH=$PYTHONPATH:/gpfs/work/OGS20_PRACE_P/COPERNICUS/bit.sea 
+
+CODE=$HOME/BIOPTIMOD/CODE
+source $CODE/ogstm/compilers/machine_modules/galileo.intel
+
+ulimit -s unlimited
+##########################################################
+
+#cd ${SLURM_SUBMIT_DIR}
+export BASEDIR=/gpfs/scratch/userexternal/ealvarez/global_14_aphyt
+export WORKDIR=$BASEDIR/radtrans_marshall_oasim_aphyvar_initial_carbon_1slope_2group_fix
+export BINDIR=/galileo/home/userexternal/ealvarez/MITgcm/global/build_15_radtrans_aphyvar_carbon_1slope_2group
+
+cd $WORKDIR
+## link files for forcing and initial conditions, plus some namelists 
+ln -s $BASEDIR/input/* . > /dev/null 2>&1
+#ln -s $BASEDIR/global_oce_input_fields/* . > /dev/null 2>&1
+## copy some other namelists
+cp $BASEDIR/namelist/*data* .
+cp $BINDIR/mitgcmuv ./mitgcmuv
+
+## very important if you want to run on more than one node!!!
+#export I_MPI_FABRICS=shm:tmi
+
+#export OMP_NUM_THREADS=${nhypthr}
+#export PAT_RT_EXPERIMENT=samp_pc_time
+#srun --mpi=pmi2 -N 24 -n 24 ./mitgcmuv
+#srun -n 24 --cpu-bind=v --slurmd-debug=error ./mitgcmuv
+srun --mpi=pmi2 -n 108 ./mitgcmuv
+
+## cleaning up
+#find . -type l -exec rm {} \;
+#rm ./pickup*
+exit

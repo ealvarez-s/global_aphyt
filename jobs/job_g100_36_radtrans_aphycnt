@@ -1,0 +1,63 @@
+#!/bin/bash
+#SBATCH --job-name=test_cnt
+##SBATCH -p mpp
+#SBATCH -N 1
+##SBATCH -n 36
+#SBATCH --ntasks-per-node=48
+#SBATCH --time=10:00:00
+#SBATCH --mem=144gb
+###SBATCH --account=OGS20_PRACE_P
+###SBATCH --account=OGS21_PRACE_P
+###SBATCH --account=tra21_seamless
+#SBATCH --account=IscrB_3DSBM
+#SBATCH --partition=g100_usr_prod
+#SBATCH --output ./rt_aphycnt_detritus.%j.out
+
+#umask 022 #
+#ulimit -s 1048576
+#ulimit -c unlimited
+
+#module purge
+module load profile/base
+#module load autoload
+#module load intel/oneapi-2021--binary
+#module load intelmpi/oneapi-2021--binary
+
+#module load hdf5/1.8.18--intel--pe-xe-2018--binary netcdf/4.6.1--intel--pe-xe-2018--binary
+#module load mpi4py/3.0.0--intelmpi--2018--binary
+
+#source /g100_work/OGS20_PRACE_P_2/COPERNICUS/py_env_2.7.12/bin/activate 
+#export PYTHONPATH=$PYTHONPATH:/g100_work/OGS20_PRACE_P_2/COPERNICUS/bit.sea
+
+source $HOME/MITgcmBFM-build/compilers/machine_modules/g100.intel
+
+ulimit -s unlimited
+##########################################################
+
+#cd ${SLURM_SUBMIT_DIR}
+export BASEDIR=/g100_scratch/userexternal/ealvarez/global_aphyt
+export WORKDIR=$BASEDIR/radtrans_aphycnt_detritus
+#export BINDIR=/g100/home/userexternal/ealvarez/MITgcm_galileo/global/build_22_test_aphycnt
+export BINDIR=/g100/home/userexternal/ealvarez/MITgcm_galileo/global/build_23_aphycnt_noPart
+
+cd $WORKDIR
+## link files for forcing and initial conditions, plus some namelists 
+ln -s $BASEDIR/input/* . > /dev/null 2>&1
+#ln -s $BASEDIR/global_oce_input_fields/* . > /dev/null 2>&1
+## copy some other namelists
+cp $BASEDIR/namelist/*data* .
+cp $BINDIR/mitgcmuv ./mitgcmuv
+
+## very important if you want to run on more than one node!!!
+#export I_MPI_FABRICS=shm:tmi
+
+#export OMP_NUM_THREADS=${nhypthr}
+#export PAT_RT_EXPERIMENT=samp_pc_time
+#srun --mpi=pmi2 -N 24 -n 24 ./mitgcmuv
+#srun -n 24 --cpu-bind=v --slurmd-debug=error ./mitgcmuv
+srun --mpi=pmi2 -n 36 ./mitgcmuv
+
+## cleaning up
+#find . -type l -exec rm {} \;
+#rm ./pickup*
+exit

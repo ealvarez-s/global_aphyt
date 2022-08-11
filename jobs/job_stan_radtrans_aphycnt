@@ -1,0 +1,76 @@
+#!/bin/csh
+#PBS -q ace-r                         # job queue not neccesary  so far 
+#PBS -N aphy_cnt                      # give the job a name
+#PBS -l cpunum_job=3                  # cpus per node
+#PBS -b 2                             # number of nodes
+#PBS -T mpisx
+#PBS -l elapstim_req=24:00:00          # max wallclock time
+#PBS -l cputim_prc=24:00:00            # max accumulated cputime per job 
+#PBS -l memsz_job=6gb                  # max accumulated memory
+#PBS -j o                              # join i/o
+#PBS -M eva.alvarez@awi.de             # email
+
+#echo "Test1"
+
+# working directory
+setenv MAINDIR /ace/user/ealvarez/global_13_radtrans_aphy
+setenv SAVEDIR $MAINDIR/radtrans_aphy_constant
+setenv BINDIR /home/ace/ealvarez/MITgcm/global/build_13_radtrans_marshall_aphytcte
+
+######### sx8 stuff
+#setenv F_PROGINF DETAIL
+# setenv MPIPROGINF ALL_DETAIL
+#setenv F_SYSLEN 1024
+#setenv F_SETBUF 4096
+#echo "Check F_SYSLEN:" $F_SYSLEN
+
+cd $SAVEDIR
+echo $cwd
+
+cp $BINDIR/mitgcmuv ./mitgcmuv
+cp $MAINDIR/namelist/data* .
+cp $MAINDIR/namelist/eedata .
+ln -s $MAINDIR/input/* .
+
+# in the year 5 do a run with much output
+#if (-e $SAVEDIR/iter0.dat) then
+#    set dummyvar = `grep 103680 $SAVEDIR/iter0.dat`
+#    if ( $#dummyvar > 0 ) then
+#      echo 'doing much output'
+#      cp data.pkg.diag data.pkg
+#      cp data.diagnostics.fullexport data.diagnostics
+#    else
+#      echo 'doing regular output'
+#    endif
+#endif
+
+#test -e $SAVEDIR/iter0.dat && cp $SAVEDIR/pickup*.`cat $SAVEDIR/iter0.dat`.* .
+#test -e $SAVEDIR/iter0.dat && cp $SAVEDIR/data .
+
+# some optimization that I do not understand (taken from web page instructions)# setenv MPI_SPIN 1
+# setenv MPI_PROCBIND 1
+# primitve timer
+date
+
+#nec sx8
+#####################
+# single node performance
+# mpirun -np 3 ./mitgcmuv 
+# ./mitgcmuv > STDOUT.0000
+
+# run the model on multiple nodes
+mpirun -nn 2 -nnp 3 ./mitgcmuv
+
+##### only with -l option linker
+#prof -m mon.out.0.0 ./mitgcmuv >prof.out
+
+## cleaning up
+#find . -type l -exec rm {} \;
+#rm ./pickup*
+rm $SAVEDIR/pickup*
+
+# again the primitive timer
+date
+
+exit
+
